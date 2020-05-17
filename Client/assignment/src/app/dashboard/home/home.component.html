@@ -1,0 +1,208 @@
+<!------------------------------------ header -------------------------------------------->
+<div class="row bg-light mt-2 mb-2">
+    <div class="col-md-10">
+        <h4>Employee Management</h4>
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-md btn-success" (click)="openPopupToAddNewEmployee(addEmployeeTemplate)"><i
+                class="fa fa-plus mr-2"></i>Add Employee</button>
+    </div>
+</div>
+
+<!----------------------------------- Main Table  -------------------------------------->
+<div class="container" *ngIf="employees?.length">
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">EMP ID</th>
+                        <th scope="col">Contact</th>
+                        <th scope="col">city</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let emp of employees;let i = index">
+                        <th scope="row">{{i+1}}</th>
+                        <td>{{emp.first_name}} {{emp.last_name}}</td>
+                        <td>{{emp.empid}} </td>
+                        <td>{{emp.mobile}} </td>
+                        <td>{{emp.city}} </td>
+                        <td> <button class="btn btn-md btn-danger mr-2" (click)="deleteEmployee(emp.id)">
+                                <i class="fa fa-trash"></i> Delete
+                            </button>
+                            <button class="btn btn-md btn-primary"
+                                (click)="updateEmployeePopup(addEmployeeTemplate,emp)">
+                                <i class="fa fa-edit"></i> Update
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--------------------------------- Show Errors if Any -------------------------------->
+<div class="container">
+    <div class="row" *ngIf="errorMsg">
+        <h4 class="text-danger">{{errorMsg}}</h4>
+    </div>
+</div>
+
+<!------------------------- If No records available in Database ------------------------>
+<div class="container" *ngIf="employees?.length == 0">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 mt-5">
+            <span class="text-danger"> </span> No records available, please add employees...
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+
+<!------------------------------ Add / Update  Employee Popup/Modal ------------------------------->
+<ng-template #addEmployeeTemplate>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left"> {{popupTitle}} </h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide();Cancel();">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="employeeForm">
+            <div class="row">
+                <div class="col-md-6">
+                    <div>
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Enter First Name </mat-label>
+                            <input matInput type="text" [formControl]="employeeForm.controls['first_name']" required>
+                        </mat-form-field>
+                        <span
+                            *ngIf="employeeForm.controls['first_name'].invalid && (employeeForm.controls['first_name'].dirty || employeeForm.controls['first_name'].touched)"
+                            style="color: red;">
+                            <span *ngIf="employeeForm.controls['first_name'].errors.required">
+                                First name is required.
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div>
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Enter Last Name </mat-label>
+                            <input matInput type="text" [formControl]="employeeForm.controls['last_name']" required>
+                        </mat-form-field>
+                        <span
+                            *ngIf="employeeForm.controls['last_name'].invalid && (employeeForm.controls['last_name'].dirty || employeeForm.controls['last_name'].touched)"
+                            style="color: red;">
+                            <span *ngIf="employeeForm.controls['last_name'].errors.required">
+                                Last name is required.
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div>
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Enter Employye ID </mat-label>
+                            <input matInput type="text" [formControl]="employeeForm.controls['empid']" required>
+                        </mat-form-field>
+                        <span
+                            *ngIf="employeeForm.controls['empid'].invalid && (employeeForm.controls['empid'].dirty || employeeForm.controls['empid'].touched)"
+                            style="color: red;">
+                            <span *ngIf="employeeForm.controls['empid'].errors.required">
+                                EMP ID is required.
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div>
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Enter Date of Birth </mat-label>
+                            <!-- <input matInput type="datetime-local" formControlName="dob" required> -->
+                            <input matInput formControlName="dob" [matDatepicker]="picker">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                        <span
+                            *ngIf="employeeForm.controls['dob'].invalid && (employeeForm.controls['dob'].dirty || employeeForm.controls['dob'].touched)"
+                            style="color: red;">
+                            <span *ngIf="employeeForm.controls['dob'].errors.required">
+                                Date of birth is required.
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div>
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Enter City </mat-label>
+                            <input matInput type="text" formControlName="city" required>
+                        </mat-form-field>
+                        <span
+                            *ngIf="employeeForm.controls['city'].invalid && (employeeForm.controls['city'].dirty || employeeForm.controls['city'].touched)"
+                            style="color: red;">
+                            <span *ngIf="employeeForm.controls['city'].errors.required">
+                                City is required.
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div>
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Enter Mobile </mat-label>
+                            <input (input)=_keyPress($event.target.value) matInput type="number"
+                                [formControl]="employeeForm.controls['mobile']" required>
+                        </mat-form-field>
+                        <span
+                            *ngIf="employeeForm.controls['mobile'].invalid && (employeeForm.controls['mobile'].dirty || employeeForm.controls['mobile'].touched)"
+                            style="color: red;">
+                            <span *ngIf="employeeForm.controls['mobile'].errors.required">
+                                Mobile Number is required.
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div>
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Enter Address </mat-label>
+                            <input matInput type="text" formControlName="address" required>
+                        </mat-form-field>
+                        <span
+                            *ngIf="employeeForm.controls['address'].invalid && (employeeForm.controls['address'].dirty || employeeForm.controls['address'].touched)"
+                            style="color: red;">
+                            <span *ngIf="employeeForm.controls['address'].errors.required">
+                                Address is required.
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <button class="btn btn-md btn-success" *ngIf="popupTitle == 'Add Employee'"
+                        (click)="createEmployee()">Submit</button>
+                </div>
+                <div class="col-md-2" *ngIf="popupTitle == 'Update Employee'">
+                    <button class="btn btn-md btn-success" (click)="updateEmployee()">Update</button>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-md btn-danger" (click)="Cancel()">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</ng-template>

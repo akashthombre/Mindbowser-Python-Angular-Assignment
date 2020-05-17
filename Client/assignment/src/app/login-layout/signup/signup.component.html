@@ -1,0 +1,108 @@
+<div class="row" >
+    <div class="col-3"></div>
+    <div class="col-6" style="margin-top:2%;text-align: center;">
+        <mat-card class="col-md-12">
+            <mat-card-header class="bg-light" style="justify-content: center ">
+                <h2>SIGN UP</h2>
+            </mat-card-header>
+            <mat-card-content style="margin-top: 5%;padding: 5%;">
+                <form [formGroup]="signupForm">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div>
+                                <mat-form-field appearance="outline" style="width: 100%;">
+                                    <mat-label>Enter First Name</mat-label>
+                                    <input matInput type="text" [formControl]="signupForm.controls['first_name']">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div>
+                                <mat-form-field appearance="outline" style="width: 100%;">
+                                    <mat-label>Enter Last Name</mat-label>
+                                    <input matInput type="text" [formControl]="signupForm.controls['last_name']">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div>
+                                <mat-form-field appearance="outline" style="width: 100%;">
+                                    <mat-label>Enter email</mat-label>
+                                    <input matInput type="email" [formControl]="signupForm.controls['email']">
+                                    
+                                </mat-form-field>
+                                <div
+                                    *ngIf="signupForm.controls['email'].invalid && (signupForm.controls['email'].dirty || signupForm.controls['email'].touched)"
+                                    style="color: red;">
+                                    <div *ngIf="signupForm.controls['email'].errors.required">
+                                      Applicant Email is required.
+                                    </div>
+                                    <p style="color:red"
+                                      *ngIf="hasError('email', 'pattern')  || emailFlag == 1 || hasError('email', 'touched')">
+                                      Email is Invalid
+                                    </p>
+                                  </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div>
+                                <mat-form-field appearance="outline" style="width: 100%;">
+                                    <mat-label>Enter Password</mat-label>
+                                    <input matInput type="{{inputType}}"
+                                        [formControl]="signupForm.controls['password']">
+                                    <mat-icon *ngIf="!passwordToggle" matSuffix style="font-size: 25px;"
+                                        (click)="togglePassword()">visibility</mat-icon>
+                                    <mat-icon *ngIf="passwordToggle" matSuffix style="font-size: 25px;"
+                                        (click)="togglePassword()">visibility_off</mat-icon>
+                                </mat-form-field>
+                            </div>
+                            <div *ngIf="showMsg">
+                                <p style="color: red;">{{errorMsg}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div>
+                                <mat-form-field appearance="outline" style="width: 100%;">
+                                    <mat-label>Enter Username</mat-label>
+                                    <input matInput type="text" [formControl]="signupForm.controls['username']">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div>
+                                <mat-form-field appearance="outline" style="width: 100%;">
+                                    <mat-label>Enter Address</mat-label>
+                                    <input matInput type="text" [formControl]="signupForm.controls['address']">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div>
+                                <mat-form-field appearance="outline" style="width: 100%;">
+                                    <mat-label>Enter Company </mat-label>
+                                    <input matInput type="text" [formControl]="signupForm.controls['company']">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <button class="btn btn-md btn-success" (click)="signUp()">Submit</button>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-md btn-danger" (click)="Cancel()">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="col-3"></div>
+</div>

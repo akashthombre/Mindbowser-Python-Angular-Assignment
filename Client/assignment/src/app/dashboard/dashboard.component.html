@@ -1,0 +1,32 @@
+<mat-toolbar class="example-header">
+    <mat-label slot="start" style="color:white;">
+        <div class="col-md-9" style="text-align: start;">
+            <h4>Akash Thombre Assignment</h4>
+        </div>
+    </mat-label>
+    <mat-label style="float: right;margin-left: auto;color:#fff;display: flex;">
+        Welcome
+         <span>
+            <div class="dropleft">
+                <i class="material-icons" style="cursor:pointer; color:white; font-size: 40px; " data-toggle="dropdown"
+                    aria-expanded="false">
+                    person
+                </i>
+            </div>
+        </span>
+    </mat-label>
+</mat-toolbar>
+<mat-sidenav-container class="example-container">
+    <mat-sidenav #sidenav mode="side" opened class="example-sidenav" [fixedInViewport]="options.value.fixed"
+        [fixedTopGap]="options.value.top" [fixedBottomGap]="options.value.bottom">
+        <mat-nav-list class="sidebarlist">
+            <a mat-list-item [routerLink]="['./home']"  routerLinkActive="home"><i
+                    class="material-icons"> account_balance</i>&nbsp; Home</a>
+            <a mat-list-item (click)="logOut()"><i class="material-icons">
+                    exit_to_app</i>&nbsp; Logout</a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content [formGroup]="options" style="background: white;">
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>

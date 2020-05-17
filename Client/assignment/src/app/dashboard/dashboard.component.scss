@@ -1,0 +1,45 @@
+.example-container {
+    position: absolute;
+    top: 60px;
+    bottom: 0px;
+    left: 0;
+    right: 0;
+  }
+  
+  .example-sidenav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 220px;
+    background: #13242e;
+  }
+  .example-header {
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #36496b;
+  }
+  
+  .example-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    justify-content: center;
+  }
+  .mat-nav-list a{
+    transition: transform .2s;
+    color: white;
+}
+  .mat-nav-list a:hover{
+    color: black;
+    background-color: #33ccff !important;
+    -ms-transform: scale(1.02); /* IE 9 */
+     -webkit-transform: scale(1.02); /* Safari 3-8 */
+     transform: scale(1.02); 
+ }
+  .mat-nav-list a.active-link {
+    background-color: #33ccff !important;
+    color: white;
+}
